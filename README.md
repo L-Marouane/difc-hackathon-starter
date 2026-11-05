@@ -43,10 +43,10 @@ bash <(curl -sL https://raw.githubusercontent.com/databricks-solutions/ai-dev-ki
 cd difc-hackathon-starter/app && npm install && claude
 ```
 
-## Step 0 · Get the kit into your workspace (5 minutes)
+## Step 0 · Import the kit and run the setup (5 minutes)
 
-1. In Databricks: **Workspace** → **Create** → **Git folder** → paste this repo URL.
-2. Open **`00_Setup_Data`**, click **Run all** (about 5 minutes), then open **`01_Hackathon_Guide`** while it runs. It lands about 1M rows of raw data in `/Volumes/workspace/raw/landing/` and deploys your starter app, `falak-app`.
+1. In Databricks: **Workspace** → your home folder → **⋮** → **Import** → drop the zip you downloaded.
+2. Open **`00_Setup_Data`** in the imported folder, click **Run all** (about 5 minutes), then open **`01_Hackathon_Guide`** while it runs. It lands about 1M rows of raw data in `/Volumes/workspace/raw/landing/` and deploys your starter app, `falak-app`.
 
 ## The steps
 
