@@ -27,6 +27,18 @@ api = w.api_client.do  # raw REST: works whatever SDK version the serverless env
 notebook_path = dbutils.notebook.entry_point.getDbutils().notebook().getContext().notebookPath().get()
 repo_root = os.path.dirname(notebook_path)
 files = [f"{repo_root}/reference/pipeline/{f}" for f in ["01_bronze.sql", "02_silver.sql", "03_gold.sql"]]
+
+# The reference SQL targets Free Edition's `workspace` catalog. For another catalog, write adjusted copies.
+if CATALOG != "workspace":
+    import base64
+    copies = f"{repo_root}/reference/pipeline_{CATALOG}"
+    w.workspace.mkdirs(copies)
+    for i, p in enumerate(files):
+        with open(f"/Workspace{p}") as f:
+            sql = f.read().replace("/Volumes/workspace/", f"/Volumes/{CATALOG}/")
+        files[i] = f"{copies}/{os.path.basename(p)}"
+        api("POST", "/api/2.0/workspace/import", body={"path": files[i], "format": "RAW", "overwrite": True,
+                                                     "content": base64.b64encode(sql.encode()).decode()})
 print("\n".join(files))
 
 # COMMAND ----------
@@ -39,7 +51,6 @@ spec = {
     "serverless": True,
     "channel": "CURRENT",
     "development": True,
-    "configuration": {"landing_path": f"/Volumes/{CATALOG}/raw/landing"},
     "libraries": [{"file": {"path": p}} for p in files],
 }
 existing = api("GET", "/api/2.0/pipelines", query={"filter": f"name LIKE '{NAME}'"}).get("statuses", [])
