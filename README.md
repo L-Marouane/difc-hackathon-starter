@@ -29,6 +29,24 @@ It has 2,700 paying customers, 2.0M AED of MRR, six source systems, and some pro
 | Claude Code | Your AI pair programmer in the terminal | [docs.claude.com/claude-code](https://docs.claude.com/en/docs/claude-code/overview) | `claude --version` |
 | Databricks AI Dev Kit | Gives Claude Databricks skills and an MCP server (tables, SQL, Genie, apps) | [github.com/databricks-solutions/ai-dev-kit](https://github.com/databricks-solutions/ai-dev-kit), see below | `/mcp` inside Claude |
 
+**Install the Databricks CLI**
+
+```bash
+# macOS (Homebrew)
+brew tap databricks/tap
+brew trust databricks/tap
+brew install databricks
+
+# macOS or Linux, without Homebrew
+curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+# Windows (PowerShell)
+winget install Databricks.DatabricksCLI
+
+# Check: should print v1.17 or later. Already installed but older? brew upgrade databricks / winget upgrade Databricks.DatabricksCLI
+databricks -v
+```
+
 Then:
 
 ```bash
